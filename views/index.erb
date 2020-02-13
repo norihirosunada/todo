@@ -1,18 +1,18 @@
-<div>
-	<div>
-		<div>
-			<div>
-				<ul>
-					<li><a href="/">トップ</a></li>
-					<li><a href="/tasks/done">done</a></li>
-					<li><a href="/tasks/over">締切過ぎた</a></li>
-					<li><a href="/tasks/star">重要</a></li>
-					<% @lists.each do |list| %>
-						<li><a href="/?list=<%= list.id %>"><%= list.name %></a></li>
-					<% end %>
-				</ul>
-			</div>
-			<table>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-2">
+			<ul class="list-group">
+				<%= erb :_count_due, locals: {title: "トップ", url: "/", tasks: Task.all} %>
+				<li class="list-group-item"><a href="/tasks/done">done</a></li>
+				<%= erb :_count_due, locals: {title: "締切過ぎた", url: "/tasks/over", tasks: Task.all} %>
+				<li class="list-group-item"><a href="/tasks/star">重要</a></li>
+				<% @lists.each do |list| %>
+					<%= erb :_count_due, locals: {title: list.name, url: "/?list=#{list.id}", tasks: list.tasks} %>
+				<% end %>
+			</ul>
+		</div>
+		<div class="col-lg-10">
+			<table class="table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>タイトル</th>
@@ -72,7 +72,7 @@
 						</tr>
 					<% end %>
 					<tr>
-						<td colspan="6"><a href="/tasks/new">新しいtodo</a></td>
+						<td colspan="7"><a href="/tasks/new">新しいtodo</a></td>
 					</tr>
 				</tbody>
 			</table>
